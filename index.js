@@ -57,7 +57,7 @@ function ajax(options){
     });
 
 		xhr.onreadystatechange = function(){
-			if(this.readystate !== 4){
+			if(this.readyState !== 4){
 				return;
 			}
 
