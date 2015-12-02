@@ -1,8 +1,18 @@
 
-document.onmousemove = function(e){
-	console.log(e.pageX);
-	console.log(e.pageY);
-}
+
+
+document.addEventListener("dblclick",function(){
+ var query = (document.selection && document.selection.createRange().text) ||
+             (window.getSelection && window.getSelection().toString());
+	var url = getUrlQuery(query);
+	var def = getJson(url);
+
+	def.then(function(xhr){
+		console.log(xhr);
+	});
+});
+
+
 
 var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-TW&hl=zh-TW&dt=t&dt=bd&dj=1&source=icon&tk=509566|266802&q=";
 
@@ -11,22 +21,21 @@ function getUrlQuery(query){
 	return url + query;
 }
 
-function getJson(url,callback){
-	return get(url,data,callback,"json");
+function getJson(url){
+	return get(url,"json");
 }
 
-function get(url,callback,type){
+function get(url,type){
 	return ajax({
 		url:url,
 		type:"GET",
-		dataType:type,
-		success:callback
+		dataType:type
   });
 }
 
 function ajax(options){
 	
-	if(typeof === 'undefined'){
+	if(typeof options === 'undefined'){
 		throw new TypeError('Options must be a object');
   }	
 
@@ -36,11 +45,11 @@ function ajax(options){
 		callback = options.success || function (){};
 	
 	return new Promise(function(resolve, reject){
-		var xhr = new new XMLHttpRequest();
+		var xhr =  new XMLHttpRequest();
 		xhr.open(
 			type,
 			url,
-			typeof options.async === 'undefined' ? true : options.async,
+			typeof options.async === 'undefined' ? true : options.async
     );
 		
 		Object.keys(options.headers || {}).forEach(function(name) {
