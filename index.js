@@ -1,16 +1,17 @@
-
-
+(function(){
 
 document.addEventListener("dblclick",function(){
  var query = (document.selection && document.selection.createRange().text) ||
              (window.getSelection && window.getSelection().toString());
 	var url = getUrlQuery(query);
-	var def = getJson(url);
-
-	def.then(function(xhr){
-		console.log(xhr);
+	var deferred = getJson(url);
+	deferred.then(function(data){
+		var result =  JSON.parse(data);
+		console.log(result);
 	});
 });
+
+})();
 
 
 
@@ -41,10 +42,9 @@ function ajax(options){
 
 	var url = options.url || "",
 		type = options.type || "GET",
-		dataType = options.dataType || "json",
-		callback = options.success || function (){};
+		dataType = options.dataType || "json"
 	
-	return new Promise(function(resolve, reject){
+		return new Promise(function(resolve, reject){
 		var xhr =  new XMLHttpRequest();
 		xhr.open(
 			type,
@@ -62,7 +62,7 @@ function ajax(options){
 			}
 
 			if(this.status === 200){
-				resolve(xhr);
+				resolve(xhr.response);
 			}else{
 				reject(xhr);
 			}
