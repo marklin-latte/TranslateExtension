@@ -1,6 +1,11 @@
 (function(){
 
+ createDialogUI();
 document.addEventListener("dblclick",function(){
+var dialog = document.getElementById("tranlateDialog");
+dialog.showModal();
+
+
  var query = (document.selection && document.selection.createRange().text) ||
              (window.getSelection && window.getSelection().toString());
 	var url = getUrlQuery(query);
@@ -17,6 +22,17 @@ document.addEventListener("dblclick",function(){
 
 var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-TW&hl=zh-TW&dt=t&dt=bd&dj=1&source=icon&tk=509566|266802&q=";
 
+
+function createDialogUI(){
+
+	var dialogHtml = "<dialog id='tranlateDialog'>" +
+									"<div>" +
+									"<p>Test</p>" +
+									"</div>" +
+									"</dialog>";
+	var parent = document.getElementsByTagName("body");
+	parent[0].insertAdjacentHTML("afterend",dialogHtml);	
+}
 
 function getUrlQuery(query){
 	return url + query;
