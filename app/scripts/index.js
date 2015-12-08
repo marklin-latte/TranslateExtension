@@ -1,10 +1,13 @@
 (function(){
 
  createDialogUI();
-document.addEventListener("dblclick",function(){
-var dialog = document.getElementById("tranlateDialog");
-dialog.showModal();
-
+document.addEventListener("dblclick",function(e){
+	var dialog = document.getElementById("app-tranlateDialog");
+	dialog.show();
+	dialog.style.top = e.pageY + "px";
+	dialog.style.right = e.pageX + "px";
+	console.log(dialog.style.top);
+	console.log(dialog.style.right);
 
  var query = (document.selection && document.selection.createRange().text) ||
              (window.getSelection && window.getSelection().toString());
@@ -13,6 +16,8 @@ dialog.showModal();
 	deferred.then(function(data){
 		var result =  JSON.parse(data);
 		console.log(result);
+		var tranlateText = document.getElementById("app-tranlateText");
+		tranlateText.textContent = result.dict[0].terms[0];	
 	});
 });
 
@@ -25,9 +30,9 @@ var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=aut
 
 function createDialogUI(){
 
-	var dialogHtml = "<dialog id='tranlateDialog'>" +
+	var dialogHtml = "<dialog id='app-tranlateDialog'>" +
 									"<div>" +
-									"<p>Test</p>" +
+									"<p id='app-tranlateText'>Test</p>" +
 									"</div>" +
 									"</dialog>";
 	var parent = document.getElementsByTagName("body");

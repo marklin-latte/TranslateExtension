@@ -14,6 +14,7 @@
   ],
   "content_scripts" : [ {
     "matches" : ["<all_urls>"],
+		"css": [ "css/app.css" ],
     "js" : ["scripts/index.js"]
     }]
 }
