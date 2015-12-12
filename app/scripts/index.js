@@ -1,38 +1,6 @@
 (function(){
 
-createDialogUI();
-document.addEventListener("dblclick",function(e){
-	var dialog = document.getElementById("app-tranlateDialog");
-	dialog.show();
-	dialog.style.top = e.pageY + "px";
-	dialog.style.left =   e.pageX + "px";
-	console.log('Y:' + e.pageY);
-	console.log('X:' + e.pageX);	
-
- var query = (document.selection && document.selection.createRange().text) ||
-             (window.getSelection && window.getSelection().toString());
-	var url = getUrlQuery(query);
-	var deferred = getJson(url);
-	deferred.then(function(data){
-		var result =  JSON.parse(data);
-		console.log(result);
-		var tranlateText = document.getElementById("app-tranlateText");
-		tranlateText.textContent = result.dict[0].terms[0];	
-	});
-});
-
-document.addEventListener("click",function(){
-	var dialog = document.getElementById("app-tranlateDialog");
-	dialog.close();
-});
-
-
-})();
-
-
-
 var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-TW&hl=zh-TW&dt=t&dt=bd&dj=1&source=icon&tk=509566|266802&q=";
-
 
 function createDialogUI(){
 
@@ -42,7 +10,7 @@ function createDialogUI(){
 									"</div>" +
 									"</dialog>";
 	var parent = document.getElementsByTagName("body");
-	parent[0].insertAdjacentHTML("afterend",dialogHtml);	
+	parent[0].innerHTML += dialogHtml;	
 }
 
 function getUrlQuery(query){
@@ -100,4 +68,38 @@ function ajax(options){
   });
 
 }
+
+	return (function init(){
+		createDialogUI();
+		document.addEventListener("dblclick",function(e){
+			var dialog = document.getElementById("app-tranlateDialog");
+			dialog.show();
+			dialog.style.top = e.pageY + "px";
+			dialog.style.left =   e.pageX + "px";
+
+	 	var query = (document.selection && document.selection.createRange().text) ||
+   	          (window.getSelection && window.getSelection().toString());
+			var url = getUrlQuery(query);
+			var deferred = getJson(url);
+			deferred.then(function(data){
+				var result =  JSON.parse(data);
+				console.log(result);
+				var tranlateText = document.getElementById("app-tranlateText");
+				tranlateText.textContent = result.dict[0].terms[0];	
+			});
+		});
+
+		document.addEventListener("click",function(){
+			var dialog = document.getElementById("app-tranlateDialog");
+			if(dialog.hasAttribute("open")){
+				dialog.close();
+			}
+		});
+
+	})();
+
+})();
+
+
+
 
