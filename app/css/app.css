@@ -1,5 +1,6 @@
 #app-tranlateDialog {
 	width:250px;
+	margin:0px;
 	border-radius: 15px;
 	border:0;
 	transition:.15s box-shadow;

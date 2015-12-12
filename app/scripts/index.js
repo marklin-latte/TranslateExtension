@@ -1,13 +1,13 @@
 (function(){
 
- createDialogUI();
+createDialogUI();
 document.addEventListener("dblclick",function(e){
 	var dialog = document.getElementById("app-tranlateDialog");
 	dialog.show();
 	dialog.style.top = e.pageY + "px";
-	dialog.style.right = e.pageX + "px";
-	console.log(dialog.style.top);
-	console.log(dialog.style.right);
+	dialog.style.left =   e.pageX + "px";
+	console.log('Y:' + e.pageY);
+	console.log('X:' + e.pageX);	
 
  var query = (document.selection && document.selection.createRange().text) ||
              (window.getSelection && window.getSelection().toString());
@@ -20,6 +20,12 @@ document.addEventListener("dblclick",function(e){
 		tranlateText.textContent = result.dict[0].terms[0];	
 	});
 });
+
+document.addEventListener("click",function(){
+	var dialog = document.getElementById("app-tranlateDialog");
+	dialog.close();
+});
+
 
 })();
 
