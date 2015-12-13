@@ -1,3 +1,11 @@
 # TranslateExtension
+TranlateExtension is a chrome extension, it can tranlate english to chinese by google ,
+and immediately show result on dialog.
 
-![tranpng.gif](http://user-image.logdown.io/user/13878/blog/13097/post/360063/fJUxe0zNS2zxchhHK1V5_tranpng.gif)
+
+---
+![alt tag](https://github.com/h091237557/TranslateExtension/blob/master/readmeResouce/demo1.png)
+
+---
+
+![alt tag](https://github.com/h091237557/TranslateExtension/blob/master/readmeResouce/tranpng.gif)
