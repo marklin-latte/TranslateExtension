@@ -6,7 +6,7 @@ function createDialogUI(){
 
 	var dialogHtml = "<dialog id='app-tranlateDialog'>" +
 									"<div>" +
-									"<p id='app-tranlateText'>Test</p>" +
+									"<ul id='app-tranlateText'></ul>" +
 									"</div>" +
 									"</dialog>";
 	var parent = document.getElementsByTagName("body");
@@ -116,18 +116,26 @@ function isSpecialChar(query){
 				if(isSpecialChar(query))
 					return ;
 
-				dialog.show();
-				var position = getSelectionCoords();
-				dialog.style.top = (20 +  e.pageY) + "px";
-				dialog.style.left = (position.X) + "px";
-
 				url = getUrlQuery(query);
 				deferred = getJson(url);
 				deferred.then(function(data){
-					var result =  JSON.parse(data);
-					console.log(result);
-					var tranlateText = document.getElementById("app-tranlateText");
-					tranlateText.textContent = result.dict[0].terms[0];	
+					var result =  JSON.parse(data),
+							tranlateText = document.getElementById("app-tranlateText"),
+							dict = result.dict[0],
+							html = "",
+							termCount = dict.terms.length;
+					
+					if(termCount > 5) termCount = 5;
+					for (var i=0;i<termCount;i++){
+						html += "<li><a>"+ dict.terms[i] +"</a></li>"
+					}
+					tranlateText.innerHTML = "";
+					tranlateText.innerHTML += html;
+					dialog.show();
+					var position = getSelectionCoords();
+					dialog.style.top = (20 +  e.pageY) + "px";
+					dialog.style.left = (position.X) + "px";
+
 				});
 			});
 
