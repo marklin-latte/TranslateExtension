@@ -66,39 +66,82 @@ function ajax(options){
 		xhr.send();
 
   });
-
 }
 
-	return (function init(){
-		createDialogUI();
-		document.addEventListener("dblclick",function(e){
-			var dialog = document.getElementById("app-tranlateDialog");
-			dialog.show();
-			dialog.style.top = e.pageY + "px";
-			dialog.style.left =   e.pageX + "px";
+function getSelectionCoords(){
+	var win = win || window,
+		doc = win.document,
+		sel = doc.selection, range, rects, rect,
+		x= 0 , y= 0 ,result = {};
 
-	 	var query = (document.selection && document.selection.createRange().text) ||
-   	          (window.getSelection && window.getSelection().toString());
-			var url = getUrlQuery(query);
-			var deferred = getJson(url);
-			deferred.then(function(data){
-				var result =  JSON.parse(data);
-				console.log(result);
-				var tranlateText = document.getElementById("app-tranlateText");
-				tranlateText.textContent = result.dict[0].terms[0];	
-			});
-		});
-
-		document.addEventListener("click",function(){
-			var dialog = document.getElementById("app-tranlateDialog");
-			if(dialog.hasAttribute("open")){
-				dialog.close();
+		sel = win.getSelection();
+		if(sel.rangeCount){
+			range = sel.getRangeAt(0).cloneRange();
+			if (range.getClientRects){
+				range.collapse(true);
+				rects = range.getClientRects();
+				if(rects.length > 0){
+					rect = rects[0];
+				}
+				result.X = rect.left || 0;
+				result.Y = rect.top || 0;
+				return result;
 			}
-		});
+		}
+}
 
-	})();
+function isSpecialChar(query){
+	var reg = /\W/gi;
+	var regResult = query.match(reg);
+	if(regResult !== null && regResult.length > 0)
+		return true; 
+	if(query === "" || typeof query === "undefined")
+		return true;			
 
-})();
+	return false;
+}
+
+	return {
+		init:function(){
+			
+			createDialogUI();
+			document.addEventListener("dblclick",function(e){
+				var dialog = document.getElementById("app-tranlateDialog"),
+					tranlateText = document.getElementById("app-tranlateText"),
+					selectNode = window.getSelection() || {},
+					query ,url,deferred;
+
+				tranlateText = "";
+				query = selectNode.toString();
+				if(isSpecialChar(query))
+					return ;
+
+				dialog.show();
+				var position = getSelectionCoords();
+				dialog.style.top = (20 +  e.pageY) + "px";
+				dialog.style.left = (position.X) + "px";
+
+				url = getUrlQuery(query);
+				deferred = getJson(url);
+				deferred.then(function(data){
+					var result =  JSON.parse(data);
+					console.log(result);
+					var tranlateText = document.getElementById("app-tranlateText");
+					tranlateText.textContent = result.dict[0].terms[0];	
+				});
+			});
+
+			document.addEventListener("click",function(){
+				var dialog = document.getElementById("app-tranlateDialog");
+				if(dialog.hasAttribute("open")){
+					dialog.close();
+				}
+			});
+		}
+	}
+
+
+})().init();
 
 
 
