@@ -1,17 +1,12 @@
 #app-tranlateDialog {
 	padding:0px;
 	margin:0px;
-	width:250px;
-	height:100px;
-	margin:0px;
-	border-radius: 5px;
-	border:0;
-	transition:.15s box-shadow;
-	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	color:white;
+	width:100%;
 }
 
 
-#app-tranlateDialog:before {
+#app-tranlateText:before {
     content: "";
     border-right: 10px solid transparent;
     border-bottom: 10px solid #ccc;
@@ -22,7 +17,7 @@
 }
 
 
-#app-tranlateDialog:after {
+#app-tranlateText:after {
     content: "";
     border-right: 10px solid transparent;
     border-bottom: 10px solid #fff;
@@ -33,14 +28,20 @@
 }
 
 #app-tranlateText{
+	background:white;
+	border-radius: 5px;
+	border:0;
+	transition:.15s box-shadow;
+	box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 	margin:0;
 	padding:10px;
 	position:absolute;
 	list-style:none;
+	display:inline-flex;
 }
 
 #app-tranlateText li {
-	display:inline-block;
+	height:2em;
 	padding:5px;
 	margin:2px;	
 	border-radius: 5px;
