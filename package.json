@@ -25,5 +25,8 @@
     "gulp-nodemon": "^2.0.2",
     "gulp-plumber": "^1.0.0",
     "jscoverage": "^0.6.0"
+  },
+  "dependencies": {
+    "franc": "^1.1.1"
   }
 }

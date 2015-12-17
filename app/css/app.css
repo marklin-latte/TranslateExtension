@@ -1,8 +1,10 @@
 #app-tranlateDialog {
+	z-index:9999;
 	padding:0px;
 	margin:0px;
-	color:white;
-	width:100%;
+	color:transparent;
+	background:transparent;
+	width:auto;
 }
 
 
@@ -41,7 +43,7 @@
 }
 
 #app-tranlateText li {
-	height:2em;
+	height:auto;
 	padding:5px;
 	margin:2px;	
 	border-radius: 5px;
