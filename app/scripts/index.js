@@ -122,10 +122,17 @@ function isSpecialChar(query){
 				deferred.then(function(data){
 					var result =  JSON.parse(data),
 							tranlateText = document.getElementById("app-tranlateText"),
-							dict = result.dict[0],
+							dict = "",
 							html = "",
-							termCount = dict.terms.length;
-					
+							termCount = 0;
+				
+					if(result.dict){
+						dict = result.dict[0];
+					}else{
+						return;
+					}
+					termCount = dict.terms.length;
+
 					if(termCount > 5) termCount = 5;
 					for (var i=0;i<termCount;i++){
 						html += "<li><a>"+ dict.terms[i] +"</a></li>"
