@@ -5,14 +5,16 @@ var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=aut
 
 function createDialogUI(){
 
-	var dialogHtml = "<dialog id='app-tranlateDialog'>" +
-									"<div>" +
-									"<ul id='app-tranlateText'></ul>" +
-									"</div>" +
-									"</dialog>";
+	var dialog = document.createElement('dialog');
+		  dialog.id = 'app-tranlateDialog';
+			dialog.innerHTML =  "<div>" +
+                            "<ul id='app-tranlateText'></ul>" +
+                        "</div>";
+		
 	var parent = document.getElementsByTagName("body");
-	parent[0].innerHTML += dialogHtml;	
+  parent[0].appendChild(dialog);
 }
+
 
 function getUrlQuery(query){
 	return url + query;
