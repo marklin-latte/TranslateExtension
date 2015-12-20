@@ -1,7 +1,7 @@
 /* @flow */
 (function(){
-var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-TW&hl=zh-TW&dt=t&dt=bd&dj=1&source=icon&tk=509566|266802&q=";
 
+var tranlateApi = require('./tranlateQuery');
 
 function createDialogUI(){
 
@@ -13,11 +13,6 @@ function createDialogUI(){
 		
 	var parent = document.getElementsByTagName("body");
   parent[0].appendChild(dialog);
-}
-
-
-function getUrlQuery(query){
-	return url + query;
 }
 
 function getJson(url){
@@ -106,7 +101,6 @@ function isSpecialChar(query){
 
 	return {
 		init:function(){
-			
 			createDialogUI();
 			document.addEventListener("dblclick",function(e){
 				var dialog = document.getElementById("app-tranlateDialog"),
@@ -116,28 +110,24 @@ function isSpecialChar(query){
 
 				tranlateText = "";
 				query = selectNode.toString();
-				if(isSpecialChar(query))
-					return ;
+		//		if(isSpecialChar(query))
+			//		return ;
 
-				url = getUrlQuery(query);
+
+				url = tranlateApi.getUrl(query,selectNode.focusNode.textContent);
 				deferred = getJson(url);
 				deferred.then(function(data){
 					var result =  JSON.parse(data),
 							tranlateText = document.getElementById("app-tranlateText"),
-							dict = "",
 							html = "",
-							termCount = 0;
+							termCount = 0,
+							tranlateTexts = [];
 				
-					if(result.dict){
-						dict = result.dict[0];
-					}else{
-						return;
-					}
-					termCount = dict.terms.length;
-
+					tranlateTexts = tranlateApi.getParseResult(result);
+					termCount = tranlateTexts.length; 
 					if(termCount > 5) termCount = 5;
 					for (var i=0;i<termCount;i++){
-						html += "<li><a>"+ dict.terms[i] +"</a></li>"
+						html += "<li><a>"+ tranlateTexts[i] +"</a></li>"
 					}
 					tranlateText.innerHTML = "";
 					tranlateText.innerHTML += html;

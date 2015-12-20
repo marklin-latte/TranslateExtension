@@ -27,6 +27,7 @@
     "jscoverage": "^0.6.0"
   },
   "dependencies": {
-    "franc": "^1.1.1"
+    "franc": "^1.1.1",
+    "guesslanguage": "^0.2.0"
   }
 }
